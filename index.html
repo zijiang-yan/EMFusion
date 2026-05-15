@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMFusion | Academic Project Page</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="#top">EMFusion</a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#overview">Overview</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#resources">Resources</a>
+        <a href="#gallery">Gallery</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Academic Project Page</p>
+          <h2>EMFusion: Uncertainty-Aware Conditional Diffusion for Frequency-Selective EMF Forecasting</h2>
+          <h4>Zijiang Yan*, Yixiang Huang*, Jianhua Pei, Hina Tabassum, Luca Chiaraviglio</h4>
+          <p class="hero-text">
+            EMFusion is an uncertainty-aware conditional diffusion framework for frequency-selective EMF forecasting in wireless networks. This page presents the manuscript, core method figures, related diffusion-based prior work, and supporting local research assets bundled with the site.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#architecture">View Architecture</a>
+            <a class="button button-secondary" href="https://arxiv.org/pdf/2512.15067">Read arXiv PDF</a>
+          </div>
+        </div>
+        <aside class="hero-panel">
+          <div class="metric-card">
+            <span class="metric-label">Repository contents</span>
+            <strong>Project page + local figure assets</strong>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Project title</span>
+            <strong>EMFusion: Uncertainty-Aware Conditional Diffusion for Frequency-Selective EMF Forecasting</strong>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Research focus</span>
+            <strong>Conditional diffusion, uncertainty quantification, and EMF forecasting</strong>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section" id="overview">
+        <div class="section-heading">
+          <p class="eyebrow">Overview</p>
+          <h2>What this project page presents</h2>
+        </div>
+        <div class="overview-grid">
+          <article class="text-panel">
+            <h3>Project framing</h3>
+            <p>
+              This repository is centered on EMFusion, a diffusion-based framework for probabilistic forecasting of frequency-selective EMF exposure in wireless networks. The included manuscript provides the technical narrative, methodology, and evaluation figures that define the project.
+            </p>
+            <p>
+              The presentation below centers the two key method figures from the manuscript: the residual U-Net architecture and the conditional cross-attention forecasting pipeline.
+            </p>
+          </article>
+          <article class="text-panel">
+            <h3>Abstract-style summary from the manuscript</h3>
+            <p>
+              The included paper introduces EMFusion, a conditional multivariate diffusion framework for frequency-selective EMF forecasting. It integrates contextual signals such as time, season, and holidays, uses cross-attention in a residual U-Net backbone, and produces probabilistic forecasts with explicit uncertainty estimates.
+            </p>
+            <p>
+              According to the manuscript abstract, the reported model improves on the strongest baseline by 23.85% in CRPS and 13.93% in normalized RMSE while reducing prediction interval error by 22.47%.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="highlights">
+        <div class="section-heading">
+          <p class="eyebrow">Highlights</p>
+          <h2>Main elements surfaced on this page</h2>
+        </div>
+        <div class="cards-grid">
+          <article class="feature-card">
+            <h3>Residual U-Net backbone</h3>
+            <p>
+              EMFusion predicts diffusion noise with a symmetric encoder-decoder network composed of residual blocks, downsampling, and upsampling stages.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>Cross-attention conditioning</h3>
+            <p>
+              External conditions are injected dynamically through cross-attention instead of simple concatenation, letting the model reweight context across temporal scales.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>Probabilistic forecasting</h3>
+            <p>
+              EMFusion treats forecasting as iterative denoising and generates multiple stochastic futures for interval construction and uncertainty-aware decision support.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section section-spotlight" id="architecture">
+        <div class="section-heading">
+          <p class="eyebrow">Architecture</p>
+          <h2>U-Net architecture and cross-attention pipeline</h2>
+        </div>
+        <div class="architecture-intro text-panel">
+          <p>
+            The manuscript defines EMFusion through three connected ideas: diffusion as iterative refinement, cross-attention as dynamic weighting of contextual signals, and imputation-style forecasting as structured temporal inpainting. The two figures below are the center of that story.
+          </p>
+        </div>
+        <div class="spotlight-figure">
+          <figure class="focus-figure">
+            <img src="assets/figures/unet-architecture.png" alt="EMFusion residual U-Net architecture">
+            <figcaption>
+              <strong>Residual U-Net backbone.</strong> The noisy input is processed through a symmetric encoder-decoder path. Timestep embeddings are injected into residual blocks, and the intermediate feature maps are refined before reconstruction.
+            </figcaption>
+          </figure>
+          <div class="focus-copy">
+            <h3>Why the U-Net backbone matters</h3>
+            <p>
+              The manuscript uses a U-Net backbone for the noise-prediction network <code>&epsilon;<sub>&theta;</sub></code>. Encoder and decoder paths are symmetric, and each residual block applies normalization, SiLU activation, convolution, timestep conditioning, and a residual shortcut.
+            </p>
+            <p>
+              This design lets EMFusion operate directly on the multivariate time-frequency tensor rather than collapsing the problem into isolated point predictions. In the manuscript's framing, the model learns to reverse Gaussian corruption step by step and recover a structured future trajectory.
+            </p>
+            <div class="mini-points">
+              <p><strong>Residual refinement:</strong> each block progressively denoises features while preserving a shortcut path.</p>
+              <p><strong>Timestep awareness:</strong> sinusoidal timestep embeddings make every block explicitly aware of the current diffusion stage.</p>
+              <p><strong>Multiscale context:</strong> the encoder-decoder layout preserves both local detail and broader temporal structure.</p>
+            </div>
+          </div>
+        </div>
+        <div class="spotlight-figure reverse">
+          <div class="focus-copy">
+            <h3>How cross-attention conditions the forecast</h3>
+            <p>
+              Instead of concatenating side information once at the input, EMFusion uses cross-attention modules at multiple encoder and decoder layers. The feature map produces queries, while the condition tensor provides keys and values.
+            </p>
+            <p>
+              In the manuscript, positional encoding is added to both the flattened feature map and the condition sequence before attention is computed. This preserves order information while letting the model learn data-dependent correlations between EMF dynamics and context such as working hours, seasons, or holidays.
+            </p>
+            <div class="mini-points">
+              <p><strong>Queries:</strong> projected from the feature map currently being denoised.</p>
+              <p><strong>Keys and values:</strong> projected from external conditions and reused to weight relevant context.</p>
+              <p><strong>Residual fusion:</strong> the attention output is reshaped and added back to the feature map so conditioning modulates, rather than replaces, the learned representation.</p>
+            </div>
+          </div>
+          <figure class="focus-figure">
+            <img src="assets/figures/cross-attention-pipeline.png" alt="EMFusion cross-attention forecasting pipeline">
+            <figcaption>
+              <strong>Conditional multivariate forecasting pipeline.</strong> EMFusion forms queries from the latent feature map and keys and values from the context tensor, then injects the resulting attention output back into the denoising network.
+            </figcaption>
+          </figure>
+        </div>
+        <div class="cards-grid cards-grid-3">
+          <article class="feature-card">
+            <h3>Diffusion as iterative refinement</h3>
+            <p>
+              Future EMF trajectories are generated by repeatedly denoising a noisy sequence, which allows EMFusion to model a full conditional distribution instead of a single deterministic forecast.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>Inpainting-style inference</h3>
+            <p>
+              The manuscript treats forecasting as structural inpainting, so missing historical values and future values can be handled within one masked diffusion process.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>Uncertainty-aware output</h3>
+            <p>
+              Multiple generated trajectories can be turned into empirical predictive intervals, supporting probabilistic EMF monitoring and planning rather than point-only estimation.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="resources">
+        <div class="section-heading">
+          <p class="eyebrow">Resources</p>
+          <h2>Included manuscript materials</h2>
+        </div>
+        <div class="resource-grid">
+          <article class="resource-card">
+            <h3>Paper</h3>
+            <p class="resource-title">
+              EMFusion: Conditional Diffusion Framework for Trustworthy Frequency Selective EMF Forecasting in Wireless Networks
+            </p>
+            <p class="resource-meta">
+              Zijiang Yan, Yixiang Huang, Jianhua Pei, Hina Tabassum, and Luca Chiaraviglio
+            </p>
+            <div class="resource-actions">
+              <a class="text-link" href="https://arxiv.org/pdf/2512.15067">arXiv PDF</a>
+              <a class="text-link" href="https://arxiv.org/abs/2512.15067">arXiv Abstract</a>
+            </div>
+          </article>
+          <article class="resource-card">
+            <h3>Related prior work</h3>
+            <p class="resource-title">
+              Semantic-Aware Adaptive Video Streaming Using Latent Diffusion Models for Wireless Networks
+            </p>
+            <p class="resource-meta">
+              Zijiang Yan, Jianhua Pei, Hongda Wu, Hina Tabassum, and Ping Wang
+            </p>
+            <div class="resource-actions">
+              <a class="text-link" href="https://arxiv.org/pdf/2502.05695">arXiv PDF</a>
+            </div>
+          </article>
+          <article class="resource-card">
+            <h3>Method cues from the manuscript</h3>
+            <ul class="resource-list">
+              <li>Conditional diffusion for multivariate forecasting</li>
+              <li>Cross-attention integration of external context</li>
+              <li>Imputation-based inference for temporally coherent prediction</li>
+              <li>Frequency-selective EMF analysis across operators and technologies</li>
+            </ul>
+          </article>
+          <article class="resource-card">
+            <h3>Discussion anchors</h3>
+            <ul class="resource-list">
+              <li>Residual blocks with timestep embedding</li>
+              <li>QKV conditioning with positional encoding</li>
+              <li>Multivariate versus univariate forecasting</li>
+              <li>Probabilistic intervals from sampled futures</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="gallery">
+        <div class="section-heading">
+          <p class="eyebrow">Gallery</p>
+          <h2>Figures from the manuscript workspace</h2>
+        </div>
+        <div class="gallery-grid">
+          <button class="gallery-card" data-full="assets/figures/unet-architecture.png" data-title="U-Net architecture" data-caption="Residual U-Net backbone used in the EMFusion manuscript, with timestep conditioning and cross-attention integration.">
+            <img src="assets/figures/unet-architecture.png" alt="Residual U-Net architecture figure">
+            <span>U-Net architecture</span>
+          </button>
+          <button class="gallery-card" data-full="assets/figures/cross-attention-pipeline.png" data-title="Cross-attention forecasting pipeline" data-caption="Conditional multivariate diffusion forecasting figure with cross-attention.">
+            <img src="assets/figures/cross-attention-pipeline.png" alt="Cross-attention forecasting pipeline figure">
+            <span>Cross-attention pipeline</span>
+          </button>
+          <button class="gallery-card" data-full="assets/figures/uv-vs-mv.png" data-title="UV vs MV forecasting" data-caption="Comparison between univariate and multivariate forecasting strategies for EMF time series.">
+            <img src="assets/figures/uv-vs-mv.png" alt="Univariate versus multivariate forecasting figure">
+            <span>UV vs MV forecasting</span>
+          </button>
+          <button class="gallery-card" data-full="assets/figures/waveform-overview.png" data-title="Waveform overview" data-caption="Italian dataset waveform plots across operators and cellular technologies.">
+            <img src="assets/figures/waveform-overview.png" alt="Waveform figure">
+            <span>Waveform overview</span>
+          </button>
+          <button class="gallery-card" data-full="assets/figures/heatmap-comparison.png" data-title="Heatmap comparison" data-caption="Combined heatmap comparison image used as a supplementary visualization of dataset patterns.">
+            <img src="assets/figures/heatmap-comparison.png" alt="Heatmap comparison image">
+            <span>Heatmap comparison</span>
+          </button>
+        </div>
+        <div class="gallery-links">
+          <a class="text-link" href="https://arxiv.org/pdf/2512.15067">Read the EMFusion paper on arXiv</a>
+          <a class="text-link" href="https://arxiv.org/pdf/2502.05695">See related prior diffusion work</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Built from local repository assets in <code>EMFusion</code>.</p>
+    </footer>
+  </div>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close gallery view">Close</button>
+    <div class="lightbox-content" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle">
+      <img id="lightboxImage" src="" alt="">
+      <div class="lightbox-copy">
+        <h3 id="lightboxTitle"></h3>
+        <p id="lightboxCaption"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
